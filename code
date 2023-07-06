@@ -1,0 +1,44 @@
+import numpy as np
+from matplotlib import pyplot as plt
+
+#data
+x = np.array([0,1,2,3,4,5,6,7,8,9,10])
+y = np.array([4,6,5,8,9,11,13,12,15,17,21])
+
+w = 0.0
+b = 0.0
+
+m = x.shape[0]
+a = 0.01
+
+xlist = []
+ylist = []
+
+
+def descent(x,y,w,b,a,m):
+  jw = 0.0
+  jb = 0.0
+
+  for i in range(m):
+    jw += x[i] * ((w*x[i] + b) - y[i])
+    jb += ((w*x[i] + b) - y[i])
+
+  w = w - a*jw*(1/m)
+  b = b - a*jb*(1/m)
+
+  return w, b
+
+for epoch in range(1500):
+  w, b = descent(x,y,w,b,a,m)
+
+for i in range(min(x), max(x) + 1):
+  xlist.append(i)
+  ylist.append(w*i + b)
+
+print(f'f(x) = {round(w, 2)}x + {round(b, 2)}')
+
+plt.plot(x, y, 'b-', xlist, ylist, 'r--')
+plt.title('Visualization')
+plt.xlabel('x axis')
+plt.ylabel('y axis')
+plt.show
